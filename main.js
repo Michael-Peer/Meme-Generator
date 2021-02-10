@@ -49,14 +49,25 @@ function drawText() {
     const meme = getMeme()
 
     meme.lines.forEach((line) => {
+
+
+
+        if(line.txt) {
+            gCtx.textBaseline = 'top'
+            const width = gCtx.measureText(line.txt).width
+            gCtx.fillRect(10, line.pos.y, gElCanvas.width - 20, parseInt(line.size, 10));
+        }
+
+
         gCtx.lineWidth = 2
         gCtx.strokeStyle = 'black'
         gCtx.fillStyle = 'white'
         gCtx.font = `${line.size}px IMPACT`
         gCtx.textAlign = 'center'
-
         gCtx.fillText(line.txt, line.pos.x, line.pos.y)
         gCtx.strokeText(line.txt, line.pos.x, line.pos.y)
+
+   
     })
 
 
@@ -95,4 +106,21 @@ function onChangeFontSizeClicked(diff) {
 function onNextLineClicked() {
     setNextLine()
     document.getElementById('meme-text').value = ''
+}
+
+function onColorChanged(elColor) {
+    const color = elColor.value
+    if (!color) return
+    setColor(color)
+}
+
+function onAligmentClicked(alignmentCode) {
+    setAlignment(alignmentCode)
+}
+
+
+function onCanvasClicked(ev) {
+    const {offsetX, offsetY} = ev
+    const clickedText = getClickedText({offsetX, offsetY})
+    console.log(clickedText)
 }
