@@ -65,7 +65,6 @@ function createLine(pos) {
 }
 
 function deleteLine() {
-
     const lineIdx = gMeme.selectedLineIdx
     gMeme.lines.splice(lineIdx, 1)
     gMeme.selectedLineIdx -= 1
@@ -78,7 +77,11 @@ function deleteLine() {
             pos: { x: 225, y: 50 }
         }
         gMeme.lines.push(line)
+        gMeme.selectedLineIdx +=1
     }
+
+    console.log(gMeme.lines, "lines ")
+
 }
 
 
@@ -86,7 +89,7 @@ function deleteLine() {
 function getClickedLine(clickedPos, canvasWidth) {
     // console.log("clickedPos - clickedPos", clickedPos)
     let lineIdx
-    if(!gMeme.lines[gMeme.selectedLineIdx].txt) return // no text
+    if (!gMeme.lines[gMeme.selectedLineIdx].txt) return // no text
     const clickedLine = gMeme.lines.find((line, idx) => {
         lineIdx = idx
         return clickedPos.offsetX > 10
@@ -128,7 +131,7 @@ function getImgs() {
 }
 
 function setMemeText(txt) {
-    console.log(gMeme.lines[gMeme.selectedLineIdx])
+    console.log(gMeme.lines, gMeme.selectedLineIdx)
     gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
 
@@ -142,8 +145,8 @@ function getImgById(imgId) {
 function setFontSize(diff) {
     console.log(gMeme.selectedLineIdx, "setFontSize")
     let fontSize = gMeme.lines[gMeme.selectedLineIdx].size
-    if ((fontSize === 8 && diff < 0) || ( fontSize === 50 && diff > 0)) return
-gMeme.lines[gMeme.selectedLineIdx].size = fontSize + diff
+    if ((fontSize === 8 && diff < 0) || (fontSize === 50 && diff > 0)) return
+    gMeme.lines[gMeme.selectedLineIdx].size = fontSize + diff
 }
 
 function setAlignment(alignmentCode) {
