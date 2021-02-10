@@ -168,6 +168,7 @@ function drawText() {
 
 function onMemeTextChanged(elMemeText) {
     const txt = elMemeText.value
+    console.log(txt, "text")
     setMemeText(txt)
     renderCanvas()
     // drawText()

@@ -29,13 +29,13 @@
         </div>
     </header>
 
-        <section class="meme-container hide main-container">
-        <div class="canvas-container" >
+    <section class="meme-container hide main-container">
+        <div class="canvas-container">
             <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500"
                 style="outline:1px solid green"></canvas>
         </div>
 
-        <div class="controllers-container flex flex-column" >
+        <div class="controllers-container flex flex-column">
             <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
 
             <div class="add-delete-next-line flex">
@@ -48,11 +48,11 @@
 
                 <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
                 <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
-    
+
                 <button onclick="onAligmentClicked('left')">Left</button>
                 <button onclick="onAligmentClicked('center')">Center</button>
                 <button onclick="onAligmentClicked('right')">Right</button>
-    
+
             </div>
 
 
@@ -60,7 +60,6 @@
             <input type="color" oninput="onColorChanged(this)"></button>
 
 
-         
 
             <button onclick="onSaveClicked()">Savw</button>
         </div>

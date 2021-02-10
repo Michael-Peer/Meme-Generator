@@ -60,8 +60,20 @@ function createLine(pos) {
 }
 
 function deleteLine() {
+
     const lineIdx = gMeme.selectedLineIdx
     gMeme.lines.splice(lineIdx, 1)
+    gMeme.selectedLineIdx -= 1
+
+    if (!gMeme.lines.length) { //reset if empty list - conside use create line func
+        const line = {
+            txt: '',
+            size: 30,
+            color: 'black',
+            pos: { x: 225, y: 50 }
+        }
+        gMeme.lines.push(line)
+    }
 }
 
 
@@ -110,6 +122,7 @@ function getImgs() {
 }
 
 function setMemeText(txt) {
+    console.log(gMeme.lines[gMeme.selectedLineIdx])
     gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
 
