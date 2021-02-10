@@ -25,10 +25,10 @@ function renderGallery() {
 
 function onImageClicked(imgId) {
     setMemeImgId(imgId)
-    drawImg()
+    renderCanvas()
 }
 
-function drawImg() {
+function renderCanvas() {
     const meme = getMeme()
     const imgId = meme.selectedImgId
     const img = getImgById(imgId)
@@ -39,29 +39,60 @@ function drawImg() {
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 
-        drawText(meme)
+        drawText()
     }
 
 
 }
 
 function drawText() {
-    let text = getMeme().lines[0].txt
-    console.log(text)
+    const meme = getMeme()
 
-    gCtx.lineWidth = 2
-    gCtx.strokeStyle = 'black'
-    gCtx.fillStyle = 'white'
-    gCtx.font = '40px IMPACT'
-    gCtx.textAlign = 'center'
-    gCtx.fillText(text, 225, 50)
-    gCtx.strokeText(text, 225, 50)
+    meme.lines.forEach((line) => {
+        gCtx.lineWidth = 2
+        gCtx.strokeStyle = 'black'
+        gCtx.fillStyle = 'white'
+        gCtx.font = `${line.size}px IMPACT`
+        gCtx.textAlign = 'center'
+
+        gCtx.fillText(line.txt, line.pos.x, line.pos.y)
+        gCtx.strokeText(line.txt, line.pos.x, line.pos.y)
+    })
+
+
+    // const line = meme.lines[meme.selectedLineIdx]
+    // let text = line.txt
+    // const fontSize = line.size
+    // console.log(text)
+
+    // gCtx.lineWidth = 2
+    // gCtx.strokeStyle = 'black'
+    // gCtx.fillStyle = 'white'
+    // gCtx.font = `${fontSize}px IMPACT`
+    // gCtx.textAlign = 'center'
+
+    // gCtx.fillText(text, line.pos.x, line.pos.y)
+    // gCtx.strokeText(text, line.pos.x, line.pos.y)
+
+
 }
 
 function onMemeTextChanged(elMemeText) {
     const txt = elMemeText.value
+    console.log("Text", txt)
     if (!txt) return
     setMemeText(txt)
-    drawImg()
-    drawText()
+    renderCanvas()
+    // drawText()
+}
+
+function onChangeFontSizeClicked(diff) {
+    setFontSize(diff)
+    renderCanvas()
+}
+
+
+function onNextLineClicked() {
+    setNextLine()
+    document.getElementById('meme-text').value = ''
 }

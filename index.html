@@ -14,7 +14,11 @@
     <div class="canvas-container">
         <canvas id="canvas" width="500" height="500" style="outline:1px solid green"></canvas>
     </div>
-    <input type="text" name="meme-text" placeholder="Text" onchange="onMemeTextChanged(this)">
+
+    <input type="text" id="meme-text" name="meme-text" placeholder="Text" onchange="onMemeTextChanged(this)">
+    <button onclick="onNextLineClicked()">Next Line</button>
+    <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
+    <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
 
     <section class="grid-container">
     </section>

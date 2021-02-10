@@ -8,12 +8,25 @@ let gMeme = {
     selectedLineIdx: 0,
     lines: [
         {
-            txt: 'I never eat Falafel',
-            size: 20,
+            txt: '',
+            size: 30,
             align: 'left',
-            color: 'red'
+            color: 'red',
+            pos : { x: 225, y: 50}
+        },
+        {
+            txt: '',
+            size: 30,
+            align: 'left',
+            color: 'red',
+            pos : { x: 225, y: 450}
         }
     ]
+}
+
+function setNextLine() {
+    const selectedLine = gMeme.selectedLineIdx === 1 ? 0 : 1
+    gMeme.selectedLineIdx = selectedLine
 }
 
 function setMemeImgId(imgId) {
@@ -29,7 +42,7 @@ function getImgs() {
 }
 
 function setMemeText(txt) {
-    gMeme.lines[0].txt = txt
+    gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
 
 function getImgById(imgId) {
@@ -37,4 +50,10 @@ function getImgById(imgId) {
         return imgId === img.id
     })
     return img
+}
+
+function setFontSize(diff) {
+    let fontSize = gMeme.lines[0].size
+    if (fontSize === 1) return
+    gMeme.lines[selectedLineIdx].size = fontSize + diff
 }
