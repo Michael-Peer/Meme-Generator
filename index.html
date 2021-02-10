@@ -11,28 +11,45 @@
 
 <body onload="onInit()">
 
-    <div class="canvas-container">
+
+    <div class="canvas-container" hidden>
         <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500"
             style="outline:1px solid green"></canvas>
     </div>
 
-    <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
-    <button onclick="onNextLineClicked()">Next Line</button>
-    <input type="color" oninput="onColorChanged(this)"></button>
-    <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
-    <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
+    <div class="controllers-container" hidden>
+        <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
+        <button onclick="onNextLineClicked()">Next Line</button>
+        <input type="color" oninput="onColorChanged(this)"></button>
+        <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
+        <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
+    
+        <button onclick="onAligmentClicked('left')">Left</button>
+        <button onclick="onAligmentClicked('center')">Center</button>
+        <button onclick="onAligmentClicked('right')">Right</button>
+    
+        <button onclick="onDeleteLineClicked()">Delete Line</button>
+        <button onclick="onAddNewLine()">Add Line</button>
+    
+        <button onclick="onSaveClicked()">Savw</button>
+    </div>
 
-    <button onclick="onAligmentClicked('left')">Left</button>
-    <button onclick="onAligmentClicked('center')">Center</button>
-    <button onclick="onAligmentClicked('right')">Right</button>
+    <header class="main-header">
+        <div class="header-contain main-container flex space-between align-center">
+            <div class="logo">
+                <img src="./img/LOGO.png" alt="">
+            </div>
+            <ul class="navbar-conntainer clean-list flex ">
+                <li> <a class="flex align-center nav-item" href="">Galley</a> </li>
+                <li> <a  class="flex align-center nav-item" href="">Saved Memes</a> </li>
+            </ul>
+        </div>
+    </header>
 
-    <button onclick="onDeleteLineClicked()">Delete Line</button>
-    <button onclick="onAddNewLine()">Add Line</button>
-
-    <button onclick="onSaveClicked()">Savw</button>
 
 
-    <section class="grid-container">
+
+    <section class="grid-container main-container">
     </section>
 
 
