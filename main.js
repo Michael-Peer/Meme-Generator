@@ -252,7 +252,7 @@ function onSavedMemeClicked(ev) {
     document.querySelector('.saved-meme-container').classList.remove('hide')
     document.querySelector('.grid-container').style.display = 'none'
     const imgs = getSavedMemes()
-    if(!imgs) return
+    if (!imgs) return
 
     const strHtml = imgs.map((img) => {
         return `
@@ -261,4 +261,28 @@ function onSavedMemeClicked(ev) {
     }).join('')
 
     document.querySelector('.saved-meme-container').innerHTML = strHtml
+}
+
+function onSearch(elSearch) {
+    const searchTxt = elSearch.value
+    const imgs = getImgs()
+    const filteredImgs = imgs.filter((img) => {
+        return img.keywords.includes(searchTxt)
+    })
+
+
+    //TODO: MOVE THIS TO THE CENTREAL RENDERING METHOD AND PASS ARRAY
+
+    const strHtml = filteredImgs.map((img) => {
+        return `
+        <img onclick="onImageClicked(${img.id})" src="${img.url}">
+        `
+    }).join('')
+
+    document.querySelector('.grid-container').innerHTML = strHtml
+}
+
+function onDownloadClicked(elLink) {
+    const dataImg = getImgBase64()
+    elLink.href = dataImg
 }

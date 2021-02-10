@@ -55,10 +55,15 @@
 
             <input type="color" oninput="onColorChanged(this)"></button>
             <button onclick="onSaveClicked()">Savw</button>
+            <a href="#" onclick="onDownloadClicked(this)" download="meme.jpg">Download</a>
         </div>
     </section>
 
-    <input type="search">
+    <div class="search-container flex">
+        <input type="search" id="search" name="search" placeholder="Press enter to search" onchange="onSearch(this)"> 
+    </div>
+
+
     <section class="grid-container main-container">
     </section>
 
