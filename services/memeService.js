@@ -134,9 +134,10 @@ function getImgById(imgId) {
 }
 
 function setFontSize(diff) {
+    console.log(gMeme.selectedLineIdx, "setFontSize")
     let fontSize = gMeme.lines[gMeme.selectedLineIdx].size
-    if (fontSize === 1) return
-    gMeme.lines[selectedLineIdx].size = fontSize + diff
+    if (fontSize === 1 || fontSize === 50) return
+    gMeme.lines[gMeme.selectedLineIdx].size = fontSize + diff
 }
 
 function setAlignment(alignmentCode) {
