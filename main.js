@@ -17,7 +17,7 @@ function onInit() {
 
 function addListeners() {
     addMouseListeners()
-    // addTouchListeners()
+    addTouchListeners()
     // window.addEventListener('resize', () => {
     //     resizeCanvas()
     //     renderCanvas()
@@ -45,12 +45,13 @@ function onDown(ev) {
     if (!getClickedLine(pos, gElCanvas.width)) return
     setIsDragging(true)
     gStartPos = pos
-    document.body.style.cursor = 'grabbing'
+    document.body.style.cursor = 'grab'
 }
 
 function onMove(ev) {
     console.log("isDragging", getMeme().isDragging)
     if (getMeme().isDragging) {
+        document.body.style.cursor = 'grabbing'
         const pos = getEvPos(ev)
         const dx = pos.offsetX - gStartPos.offsetX
         const dy = pos.offsetY - gStartPos.offsetY
@@ -64,8 +65,8 @@ function onMove(ev) {
 }
 
 function onUp() {
+    document.body.style.cursor = 'unset'
     setIsDragging(false)
-    document.body.style.cursor = 'grab'
 }
 
 function getEvPos(ev) {
@@ -238,5 +239,26 @@ function onAddNewLine() {
 }
 
 function onSaveClicked() {
-    saveMeme()
+    const imgData = getImgBase64()
+    saveMeme(imgData)
+}
+
+function getImgBase64() {
+    return gElCanvas.toDataURL('image/png')
+}
+
+function onSavedMemeClicked(ev) {
+    ev.preventDefault()
+    document.querySelector('.saved-meme-container').classList.remove('hide')
+    document.querySelector('.grid-container').style.display = 'none'
+    const imgs = getSavedMemes()
+    if(!imgs) return
+
+    const strHtml = imgs.map((img) => {
+        return `
+        <img src="${img}">
+        `
+    }).join('')
+
+    document.querySelector('.saved-meme-container').innerHTML = strHtml
 }

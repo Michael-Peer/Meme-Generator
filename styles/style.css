@@ -9,7 +9,7 @@ a {
 
 #canvas {}
 
-.grid-container {
+.grid-container, .saved-meme-container {
     display: grid;
     grid-gap: .5em;
 

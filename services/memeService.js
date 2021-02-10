@@ -1,6 +1,6 @@
 'use strict'
 
-const KEY = 'memes';
+const KEY = 'savedMemes';
 
 
 let gKeywords = { 'happy': 12, 'funny puk': 1 }
@@ -144,10 +144,14 @@ function setAlignment(alignmentCode) {
     gMeme.lines[gMeme.selectedLineIdx].align = alignmentCode
 }
 
-function saveMeme() {
+function saveMeme(imgData) {
     const memes = loadFromStorage(KEY) || []
-    memes.push(gMeme)
+    memes.push(imgData)
     _saveMemeToStorage(memes)
+}
+
+function getSavedMemes() {
+    return loadFromStorage(KEY)
 }
 
 function _saveMemeToStorage(memes) {

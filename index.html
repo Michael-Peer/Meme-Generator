@@ -24,7 +24,7 @@
             </div>
             <ul class="navbar-conntainer clean-list flex ">
                 <li> <a class="flex align-center nav-item" href="">Galley</a> </li>
-                <li> <a class="flex align-center nav-item" href="">Saved Memes</a> </li>
+                <li> <a onclick="onSavedMemeClicked(event)" class="flex align-center nav-item" href="">Saved Memes</a> </li>
             </ul>
         </div>
     </header>
@@ -45,27 +45,24 @@
             </div>
 
             <div class="align-fonts flex">
-
                 <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
                 <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
 
                 <button onclick="onAligmentClicked('left')">Left</button>
                 <button onclick="onAligmentClicked('center')">Center</button>
                 <button onclick="onAligmentClicked('right')">Right</button>
-
             </div>
 
-
-
             <input type="color" oninput="onColorChanged(this)"></button>
-
-
-
             <button onclick="onSaveClicked()">Savw</button>
         </div>
     </section>
 
+    <input type="search">
     <section class="grid-container main-container">
+    </section>
+
+    <section class="saved-meme-container main-container hide">
     </section>
 
 
