@@ -12,11 +12,6 @@
 <body onload="onInit()">
 
 
-
-
-
-
-
     <header class="main-header">
         <div class="header-contain main-container flex space-between align-center">
             <div class="logo">
@@ -31,6 +26,7 @@
     </header>
 
     <section class="meme-container hide main-container">
+
         <div class="canvas-container">
             <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500"
                 style="outline:1px solid green"></canvas>
@@ -46,12 +42,17 @@
             </div>
 
             <div class="align-fonts flex">
-                <button class="btnic" onclick="onChangeFontSizeClicked(1)"><img src="./img/icons/increase font - icon.png"></button>
-                <button class="btnic" onclick="onChangeFontSizeClicked(-1)"><img src="./img/icons/decrease font - icon.png"></button>
+                <button class="btnic" onclick="onChangeFontSizeClicked(1)"><img
+                        src="./img/icons/increase font - icon.png"></button>
+                <button class="btnic" onclick="onChangeFontSizeClicked(-1)"><img
+                        src="./img/icons/decrease font - icon.png"></button>
 
-                <button class="btnic" onclick="onAligmentClicked('left')"><img src="./img/icons/align-to-left.png" alt=""></button>
-                <button class="btnic" onclick="onAligmentClicked('center')"><img src="./img/icons/center-text-alignment.png" alt=""></button>
-                <button class="btnic" onclick="onAligmentClicked('right')"><img src="./img/icons/align-to-right.png" alt=""></button>
+                <button class="btnic" onclick="onAligmentClicked('left')"><img src="./img/icons/align-to-left.png"
+                        alt=""></button>
+                <button class="btnic" onclick="onAligmentClicked('center')"><img
+                        src="./img/icons/center-text-alignment.png" alt=""></button>
+                <button class="btnic" onclick="onAligmentClicked('right')"><img src="./img/icons/align-to-right.png"
+                        alt=""></button>
             </div>
 
             <input type="color" oninput="onColorChanged(this)"></button>
@@ -69,11 +70,14 @@
             </form>
         </div>
 
-      
     </section>
 
     <div class="search-container flex">
         <input type="search" id="search" name="search" placeholder="Press enter to search" onchange="onSearch(this)">
+    </div>
+
+    <div class="keywords-conatiner flex align-center">
+
     </div>
 
 

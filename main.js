@@ -14,6 +14,7 @@ function onInit() {
     addListeners()
 
     renderGallery()
+    renderKeywords()
 }
 
 /**
@@ -27,10 +28,19 @@ function onInit() {
 function addListeners() {
     addMouseListeners()
     addTouchListeners()
-    // window.addEventListener('resize', () => {
-    //     resizeCanvas()
-    //     renderCanvas()
-    // })
+    window.addEventListener('resize', () => {
+        resizeCanvas()
+        renderCanvas()
+    })
+}
+
+function resizeCanvas() {
+    const elContainer = document.querySelector('.canvas-container');
+    console.log("resizing")
+    // Note: changing the canvas dimension this way clears the canvas
+    console.log(elContainer.offsetWidth, elContainer.offsetHeight)
+    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.height = elContainer.offsetHeight
 }
 
 function addMouseListeners() {
@@ -71,10 +81,22 @@ function renderGallery() {
     document.querySelector('.grid-container').innerHTML = strHtml
 }
 
-function onImageClicked(imgId) {
-    setMemeImgId(imgId)
-    renderMemeEditorScreen()
-    renderCanvas()
+function renderKeywords() {
+    const keywords = getKeywords()
+    console.log(keywords)
+    if (!keywords) return
+
+    let strHtml = ''
+
+    for (const keyword in keywords) {
+        const fontSize = keywords[keyword] + 14 + 'px'
+        strHtml += `
+        <div onclick="onKeywordClicked('${keyword}')" style="font-size: ${fontSize}">${keyword}</div>
+        `
+    }
+
+    document.querySelector('.keywords-conatiner').innerHTML = strHtml
+
 }
 
 function renderMemeEditorScreen() {
@@ -181,7 +203,6 @@ function onMove(ev) {
 
         gStartPos = pos
         renderCanvas()
-        // renderCircle()
     }
 }
 
@@ -190,29 +211,24 @@ function onUp() {
     setIsDragging(false)
 }
 
-function getEvPos(ev) {
-    var pos = {
-        offsetX: ev.offsetX,
-        offsetY: ev.offsetY
-    }
-    if (gTouchEvs.includes(ev.type)) {
-        ev.preventDefault()
-        ev = ev.changedTouches[0]
-        pos = {
-            offsetX: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
-            offsetY: ev.pageY - ev.target.offsetTop - ev.target.clientTop
-        }
-    }
-    return pos
-}
-
-
 /**
  * 
  * 
  * Click Listeners
  * 
  * **/
+
+function onImageClicked(imgId) {
+    setMemeImgId(imgId)
+    renderMemeEditorScreen()
+    renderCanvas()
+}
+
+function onKeywordClicked(keyword) {
+    increaseKeywordCount(keyword)
+    renderKeywords()
+}
+
 
 function onMemeTextChanged(elMemeText) {
     const txt = elMemeText.value
@@ -368,6 +384,23 @@ function getImgBase64() {
 function cleanTextFocus(donwloadImg) {
     gShouldCleanFocus = true
     renderCanvas(donwloadImg)
+}
+
+
+function getEvPos(ev) {
+    var pos = {
+        offsetX: ev.offsetX,
+        offsetY: ev.offsetY
+    }
+    if (gTouchEvs.includes(ev.type)) {
+        ev.preventDefault()
+        ev = ev.changedTouches[0]
+        pos = {
+            offsetX: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            offsetY: ev.pageY - ev.target.offsetTop - ev.target.clientTop
+        }
+    }
+    return pos
 }
 
 

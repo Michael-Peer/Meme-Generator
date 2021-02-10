@@ -3,7 +3,7 @@
 const KEY = 'savedMemes';
 
 
-let gKeywords = { 'happy': 12, 'funny puk': 1 }
+let gKeywords = { 'happy': 12, 'angry': 1 }
 let gImgs = [{ id: 1, url: './img/1.jpg', keywords: ['happy'] }, { id: 2, url: './img/2.jpg', keywords: ['happy'] },
 { id: 3, url: './img/3.jpg', keywords: ['angry'] }, { id: 4, url: './img/4.jpg', keywords: ['angry'] },
 { id: 5, url: './img/5.jpg', keywords: ['angry'] }, { id: 6, url: './img/6.jpg', keywords: ['angry'] },
@@ -38,6 +38,15 @@ let gMeme = {
     ]
 }
 
+
+function getKeywords() {
+    return gKeywords
+}
+
+function increaseKeywordCount(keyword) {
+    gKeywords[keyword]++
+}
+
 function setIsDragging(isDragging) {
     gMeme.isDragging = isDragging
 }
@@ -67,7 +76,10 @@ function createLine(pos) {
 function deleteLine() {
     const lineIdx = gMeme.selectedLineIdx
     gMeme.lines.splice(lineIdx, 1)
-    gMeme.selectedLineIdx -= 1
+    console.log(gMeme.selectedLineIdx)
+    if (gMeme.selectedLineIdx) gMeme.selectedLineIdx -= 1
+
+    console.log(gMeme.lines, gMeme.selectedLineIdx)
 
     if (!gMeme.lines.length) { //reset if empty list - conside use create line func
         const line = {
@@ -77,7 +89,7 @@ function deleteLine() {
             pos: { x: 225, y: 50 }
         }
         gMeme.lines.push(line)
-        gMeme.selectedLineIdx +=1
+        // gMeme.selectedLineIdx +=1
     }
 
     console.log(gMeme.lines, "lines ")
