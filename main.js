@@ -99,7 +99,16 @@ function renderGallery() {
 
 function onImageClicked(imgId) {
     setMemeImgId(imgId)
+    renderMemeEditorScreen()
     renderCanvas()
+}
+
+function renderMemeEditorScreen() {
+    document.querySelector('.grid-container').style.display = 'none'
+    document.querySelector('.main-header').hidden = true
+
+    document.querySelector('.canvas-container').hidden = false
+    document.querySelector('.controllers-container').hidden = false
 }
 
 function renderCanvas() {
