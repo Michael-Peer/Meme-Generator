@@ -24,7 +24,8 @@
             </div>
             <ul class="navbar-conntainer clean-list flex ">
                 <li> <a class="flex align-center nav-item" href="">Galley</a> </li>
-                <li> <a onclick="onSavedMemeClicked(event)" class="flex align-center nav-item" href="">Saved Memes</a> </li>
+                <li> <a onclick="onSavedMemeClicked(event)" class="flex align-center nav-item" href="">Saved Memes</a>
+                </li>
             </ul>
         </div>
     </header>
@@ -39,28 +40,40 @@
             <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
 
             <div class="add-delete-next-line flex">
-                <button onclick="onDeleteLineClicked()">Delete Line</button>
-                <button onclick="onAddNewLine()">Add Line</button>
-                <button onclick="onNextLineClicked()">Next Line</button>
+                <button class="btnic" onclick="onDeleteLineClicked()">Delete Line</button>
+                <button class="btnic" onclick="onAddNewLine()">Add Line</button>
+                <button class="btnic" onclick="onNextLineClicked()">Next Line</button>
             </div>
 
             <div class="align-fonts flex">
-                <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
-                <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
+                <button class="btnic" onclick="onChangeFontSizeClicked(1)"><img src="./img/icons/increase font - icon.png"></button>
+                <button class="btnic" onclick="onChangeFontSizeClicked(-1)"><img src="./img/icons/decrease font - icon.png"></button>
 
-                <button onclick="onAligmentClicked('left')">Left</button>
-                <button onclick="onAligmentClicked('center')">Center</button>
-                <button onclick="onAligmentClicked('right')">Right</button>
+                <button class="btnic" onclick="onAligmentClicked('left')"><img src="./img/icons/align-to-left.png" alt=""></button>
+                <button class="btnic" onclick="onAligmentClicked('center')"><img src="./img/icons/center-text-alignment.png" alt=""></button>
+                <button class="btnic" onclick="onAligmentClicked('right')"><img src="./img/icons/align-to-right.png" alt=""></button>
             </div>
 
             <input type="color" oninput="onColorChanged(this)"></button>
             <button onclick="onSaveClicked()">Savw</button>
-            <a href="#" onclick="onDownloadClicked(this)" download="meme.jpg">Download</a>
+
+            <div class="sticker-container">
+                <img onclick="onStickerClicked(1)" src="./img/stickers/cat1.png" alt="">
+            </div>
+
+            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                <input name="img" id="imgData" type="hidden" />
+                <button class="btn" type="submit">Publish</button>
+                <a href="#" onclick="onDownloadClicked(this)" download="meme.jpg">Download</a>
+                <div class="share-container"></div>
+            </form>
         </div>
+
+      
     </section>
 
     <div class="search-container flex">
-        <input type="search" id="search" name="search" placeholder="Press enter to search" onchange="onSearch(this)"> 
+        <input type="search" id="search" name="search" placeholder="Press enter to search" onchange="onSearch(this)">
     </div>
 
 
@@ -71,6 +84,7 @@
     </section>
 
 
+    <script src="./services/shareService.js"></script>
     <script src="./services/storageService.js"></script>
     <script src="./services/memeService.js"></script>
     <script src="./main.js"></script>

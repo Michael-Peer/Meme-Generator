@@ -19,6 +19,7 @@ let gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
     isDragging: false,
+    stickers: [],
     lines: [
         {
             txt: '',
@@ -39,6 +40,10 @@ let gMeme = {
 
 function setIsDragging(isDragging) {
     gMeme.isDragging = isDragging
+}
+
+function setSitcker(stickerSrc) {
+    gMeme.stickers.push(stickerSrc)
 }
 
 function setLinePos(dx, dy) {
@@ -81,6 +86,7 @@ function deleteLine() {
 function getClickedLine(clickedPos, canvasWidth) {
     // console.log("clickedPos - clickedPos", clickedPos)
     let lineIdx
+    if(!gMeme.lines[gMeme.selectedLineIdx].txt) return // no text
     const clickedLine = gMeme.lines.find((line, idx) => {
         lineIdx = idx
         return clickedPos.offsetX > 10
@@ -136,8 +142,8 @@ function getImgById(imgId) {
 function setFontSize(diff) {
     console.log(gMeme.selectedLineIdx, "setFontSize")
     let fontSize = gMeme.lines[gMeme.selectedLineIdx].size
-    if (fontSize === 1 || fontSize === 50) return
-    gMeme.lines[gMeme.selectedLineIdx].size = fontSize + diff
+    if ((fontSize === 8 && diff < 0) || ( fontSize === 50 && diff > 0)) return
+gMeme.lines[gMeme.selectedLineIdx].size = fontSize + diff
 }
 
 function setAlignment(alignmentCode) {

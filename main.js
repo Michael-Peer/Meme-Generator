@@ -121,7 +121,16 @@ function renderCanvas() {
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 
-        drawText()
+        if (meme.stickers.length) { //TODO: Loop and draw
+            const elImg = new Image()
+            elImg.src = meme.stickers[0]
+            elImg.onload = () => {
+                gCtx.drawImage(elImg, gElCanvas.width / 2, gElCanvas.height / 2, 150, 150)
+                drawText()
+            }
+        } else {
+            drawText()
+        }
     }
 
 
@@ -244,7 +253,7 @@ function onSaveClicked() {
 }
 
 function getImgBase64() {
-    return gElCanvas.toDataURL('image/png')
+    return gElCanvas.toDataURL('image/jpeg')
 }
 
 function onSavedMemeClicked(ev) {
@@ -285,4 +294,10 @@ function onSearch(elSearch) {
 function onDownloadClicked(elLink) {
     const dataImg = getImgBase64()
     elLink.href = dataImg
+}
+
+function onStickerClicked(imgNum) {
+    const src = `./img/stickers/cat${imgNum}.png`
+    setSitcker(src)
+    renderCanvas()
 }

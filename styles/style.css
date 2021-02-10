@@ -112,3 +112,25 @@ a {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+.btnic {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+
+button > img {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+}
+
+.sticker-container > img{
+    width: 75px;
+    height: 75px;
+}
