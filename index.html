@@ -12,12 +12,13 @@
 <body onload="onInit()">
 
     <div class="canvas-container">
-        <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500" style="outline:1px solid green"></canvas>
+        <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500"
+            style="outline:1px solid green"></canvas>
     </div>
 
-    <input type="text" id="meme-text" name="meme-text" placeholder="Text" onchange="onMemeTextChanged(this)">
+    <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
     <button onclick="onNextLineClicked()">Next Line</button>
-    <input type="color" onchange="onColorChanged(this)"></button>
+    <input type="color" oninput="onColorChanged(this)"></button>
     <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
     <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
 
@@ -25,11 +26,17 @@
     <button onclick="onAligmentClicked('center')">Center</button>
     <button onclick="onAligmentClicked('right')">Right</button>
 
+    <button onclick="onDeleteLineClicked()">Delete Line</button>
+    <button onclick="onAddNewLine()">Add Line</button>
+
+    <button onclick="onSaveClicked()">Savw</button>
+
 
     <section class="grid-container">
     </section>
 
 
+    <script src="./services/storageService.js"></script>
     <script src="./services/memeService.js"></script>
     <script src="./main.js"></script>
 </body>
