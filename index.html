@@ -12,27 +12,10 @@
 <body onload="onInit()">
 
 
-    <div class="canvas-container" hidden>
-        <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500"
-            style="outline:1px solid green"></canvas>
-    </div>
 
-    <div class="controllers-container" hidden>
-        <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
-        <button onclick="onNextLineClicked()">Next Line</button>
-        <input type="color" oninput="onColorChanged(this)"></button>
-        <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
-        <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
-    
-        <button onclick="onAligmentClicked('left')">Left</button>
-        <button onclick="onAligmentClicked('center')">Center</button>
-        <button onclick="onAligmentClicked('right')">Right</button>
-    
-        <button onclick="onDeleteLineClicked()">Delete Line</button>
-        <button onclick="onAddNewLine()">Add Line</button>
-    
-        <button onclick="onSaveClicked()">Savw</button>
-    </div>
+
+
+
 
     <header class="main-header">
         <div class="header-contain main-container flex space-between align-center">
@@ -41,10 +24,47 @@
             </div>
             <ul class="navbar-conntainer clean-list flex ">
                 <li> <a class="flex align-center nav-item" href="">Galley</a> </li>
-                <li> <a  class="flex align-center nav-item" href="">Saved Memes</a> </li>
+                <li> <a class="flex align-center nav-item" href="">Saved Memes</a> </li>
             </ul>
         </div>
     </header>
+
+        <section class="meme-container hide main-container">
+        <div class="canvas-container" >
+            <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500"
+                style="outline:1px solid green"></canvas>
+        </div>
+
+        <div class="controllers-container flex flex-column" >
+            <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
+
+            <div class="add-delete-next-line flex">
+                <button onclick="onDeleteLineClicked()">Delete Line</button>
+                <button onclick="onAddNewLine()">Add Line</button>
+                <button onclick="onNextLineClicked()">Next Line</button>
+            </div>
+
+            <div class="align-fonts flex">
+
+                <button onclick="onChangeFontSizeClicked(1)">Increase font</button>
+                <button onclick="onChangeFontSizeClicked(-1)">Decrease font</button>
+    
+                <button onclick="onAligmentClicked('left')">Left</button>
+                <button onclick="onAligmentClicked('center')">Center</button>
+                <button onclick="onAligmentClicked('right')">Right</button>
+    
+            </div>
+
+
+
+            <input type="color" oninput="onColorChanged(this)"></button>
+
+
+         
+
+            <button onclick="onSaveClicked()">Savw</button>
+        </div>
+    </section>
 
     <section class="grid-container main-container">
     </section>

@@ -105,10 +105,8 @@ function onImageClicked(imgId) {
 
 function renderMemeEditorScreen() {
     document.querySelector('.grid-container').style.display = 'none'
-    document.querySelector('.main-header').hidden = true
 
-    document.querySelector('.canvas-container').hidden = false
-    document.querySelector('.controllers-container').hidden = false
+    document.querySelector('.meme-container').style.display = 'flex'
 }
 
 function renderCanvas() {

@@ -28,6 +28,10 @@ a {
     height: 100%;
 }
 
+.hide{
+    display: none;
+}
+
 .main-header .navbar-conntainer>* {
     width: 132px;
     height: 130px;
@@ -69,6 +73,14 @@ a {
 .main-container {
     max-width: 1400px;
     margin: 0 auto;
+}
+
+.meme-container{
+    padding: 40px;
+}
+
+.controllers-container{
+    margin-left: 40px;
 }
 
 /* HELPERS */
