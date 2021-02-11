@@ -293,14 +293,20 @@ function onMobileShareClicked() {
     if (!navigator.share) return
 
     const img = getImgBase64()
-    const blob = await(await fetch(img)).blob(); //waiting for result
-    const file = new File([blob], 'fileName.png', { type: blob.type });
+    fetch(img).then((img) => {
+        img.blob().then((imgBlob) => {
+            const file = new File([blob], 'fileName.png', { type: blob.type });
 
-    const data = {
-        title: 'Meme',
-        text: 'Look at my meme!',
-        files: [file]
-    }
+            const data = {
+                title: 'Meme',
+                text: 'Look at my meme!',
+                files: [file]
+            }
+
+            navigator.share(data)
+        })
+    })
+
 
 }
 
