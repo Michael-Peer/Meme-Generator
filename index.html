@@ -39,7 +39,7 @@
         </div>
     </section>
 
-    <section class="meme-container hide main-container">
+    <section class="meme-container hide main-container" onclick="onMemeContainerClicked(event)">
 
         <div class="canvas-container">
             <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500"
@@ -79,6 +79,8 @@
             <div class="image-upload">
                 <input onchange="onUploadImage(this)" type="file" id="img-upload">
             </div>
+
+            <div class="mobile-share" onclick="onMobileShareClicked()">Mobile Share</div>
 
             <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                 <input name="img" id="imgData" type="hidden" />

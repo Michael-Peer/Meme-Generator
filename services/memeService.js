@@ -80,11 +80,7 @@ function setStickerPos(dx, dy) {
     gMeme.stickers[0].pos.x += dx
     gMeme.stickers[0].pos.y += dy
 
-    console.log(    gMeme.stickers[0].pos.x += dx     )
-
-        console.log(      gMeme.stickers[0].pos.y += dy)
-    }
-
+}
 
 function createLine(pos) {
     const line = {

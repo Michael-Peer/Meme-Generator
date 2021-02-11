@@ -23,6 +23,7 @@ var draggingImage = false;
 
 
 
+
 function onInit() {
     gElCanvas = document.getElementById('canvas')
     gCtx = gElCanvas.getContext('2d')
@@ -235,6 +236,13 @@ function onDown(ev) {
     document.body.style.cursor = 'grab'
 }
 
+//clear on click outside canvas
+function onMemeContainerClicked(ev) {
+    if (ev.target !== document.getElementById('canvas')) {
+        cleanTextFocus()
+    }
+}
+
 function onMove(ev) {
     console.log("isDragging", getMeme().isDragging)
     if (getMeme().isDragging) {
@@ -278,6 +286,22 @@ function onImageClicked(imgId) {
     setMemeImgId(imgId)
     renderMemeEditorScreen()
     renderCanvas()
+}
+
+function onMobileShareClicked() {
+
+    if (!navigator.share) return
+
+    const img = getImgBase64()
+    const blob = await(await fetch(img)).blob(); //waiting for result
+    const file = new File([blob], 'fileName.png', { type: blob.type });
+
+    const data = {
+        title: 'Meme',
+        text: 'Look at my meme!',
+        files: [file]
+    }
+
 }
 
 function onKeywordClicked(keyword) {
