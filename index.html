@@ -18,7 +18,7 @@
                 <img src="./img/LOGO.png" alt="">
             </div>
             <ul class="navbar-conntainer clean-list flex ">
-                <li> <a class="flex align-center nav-item" href="">Galley</a> </li>
+                <li> <a onclick="onGalleryClicked()" class="flex align-center nav-item" href="#">Galley</a> </li>
                 <li> <a onclick="onSavedMemeClicked(event)" class="flex align-center nav-item" href="">Saved Memes</a>
                 </li>
             </ul>
@@ -34,13 +34,10 @@
             </div>
 
             <datalist id="keywords">
-                <option value="Happy">
-                <option value="Angry">
-              </datalist>
+            </datalist>
 
-            <div class="keywords-conatiner flex align-center">
+            <div class="keywords-conatiner flex align-center"></div>
 
-            </div>
         </div>
     </section>
 
@@ -52,59 +49,70 @@
         </div>
 
         <div class="controllers-container flex flex-column">
-            <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
+            <input class="input-text-meme" type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
 
             <div class="add-delete-next-line flex flex-center">
                 <button class="btnic" onclick="onDeleteLineClicked()"><img src="./img/icons/trash.png" alt=""></button>
                 <button class="btnic" onclick="onAddNewLine()"><img src="./img/icons/add.png" alt=""></button>
-                <button class="btnic" onclick="onNextLineClicked()"><img src="./img/icons/up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
+                <button class="btnic" onclick="onNextLineClicked()"><img
+                        src="./img/icons/up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
             </div>
 
             <div class="align-fonts flex">
+
                 <button class="btnic" onclick="onChangeFontSizeClicked(1)"><img
                         src="./img/icons/increase font - icon.png"></button>
                 <button class="btnic" onclick="onChangeFontSizeClicked(-1)"><img
                         src="./img/icons/decrease font - icon.png"></button>
 
-                <button class="btnic" onclick="onAligmentClicked('left')"><img src="./img/icons/align-to-left.png"
+
+                <button class="btnic" onclick="onAligmentClicked('right')"><img src="./img/icons/align-to-left.png"
                         alt=""></button>
                 <button class="btnic" onclick="onAligmentClicked('center')"><img
                         src="./img/icons/center-text-alignment.png" alt=""></button>
-                <button class="btnic" onclick="onAligmentClicked('right')"><img src="./img/icons/align-to-right.png"
+                <button class="btnic" onclick="onAligmentClicked('left')"><img src="./img/icons/align-to-right.png"
                         alt=""></button>
+
             </div>
 
-            <input type="color" oninput="onColorChanged(this)"></button>
-            <button onclick="onSaveClicked()">Savw</button>
+            <input type="color" oninput="onColorChanged(this)">Pick Color</input>
+            <button class="btn-share self-start" onclick="onSaveClicked()">Savw</button>
 
-            <div class="sticker-container">
+            <select onchange="onFontSelected(this)" name="font" id="font">
+                <option value="Impact">Impact</option>
+                <option value="Arial">Arial</option>
+            </select>
+
+            <div class="sticker-container flex align-center space-around">
                 <img onclick="onStickerClicked(1)" src="./img/stickers/cat1.png" alt="">
+                <img onclick="onStickerClicked(2)" src="./img/stickers/cat2.png" alt="">
+                <img onclick="onStickerClicked(3)" src="./img/stickers/cat3.png" alt="">
             </div>
 
             <div class="image-upload">
                 <input onchange="onUploadImage(this)" type="file" id="img-upload">
             </div>
 
-            <a href="#" class="mobile-share" onclick="onMobileShareClicked()">Mobile Share</a>
 
             <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                 <input name="img" id="imgData" type="hidden" />
-                <button class="btn" type="submit">Publish</button>
-                <a class="download-link" href="#" onclick="onDownloadClicked(this)" download="meme.jpg">Download</a>
+                <button class="btn btn-share" type="submit">Publish</button>
+                <a class="btn btn-share" class="download-link" href="#" onclick="onDownloadClicked(this)"
+                    download="meme.jpg">Download</a>
+                <a class="btn btn-share self-start" href="#" class="mobile-share"
+                    onclick="onMobileShareClicked()">Mobile Share</a>
                 <div class="share-container"></div>
             </form>
         </div>
-
     </section>
-
-
-
 
     <section class="grid-container main-container">
     </section>
 
     <section class="saved-meme-container main-container hide">
     </section>
+
+
 
 
     <script src="./services/shareService.js"></script>

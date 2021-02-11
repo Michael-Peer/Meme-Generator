@@ -3,13 +3,13 @@
 const KEY = 'savedMemes';
 
 
-let gKeywords = { 'happy': 12, 'angry': 1 }
+let gKeywords = { 'happy': 12, 'angry': 1, 'funny': 15 }
 let gImgs = [{ id: 1, url: './img/1.jpg', keywords: ['happy'] }, { id: 2, url: './img/2.jpg', keywords: ['happy'] },
 { id: 3, url: './img/3.jpg', keywords: ['angry'] }, { id: 4, url: './img/4.jpg', keywords: ['angry'] },
-{ id: 5, url: './img/5.jpg', keywords: ['angry'] }, { id: 6, url: './img/6.jpg', keywords: ['angry'] },
+{ id: 5, url: './img/5.jpg', keywords: ['angry', 'funny'] }, { id: 6, url: './img/6.jpg', keywords: ['angry'] },
 { id: 7, url: './img/7.jpg', keywords: ['angry'] }, { id: 8, url: './img/8.jpg', keywords: ['angry'] },
-{ id: 9, url: './img/9.jpg', keywords: ['angry'] }, { id: 10, url: './img/10.jpg', keywords: ['angry'] },
-{ id: 11, url: './img/11.jpg', keywords: ['angry'] }, { id: 12, url: './img/12.jpg', keywords: ['happy'] },
+{ id: 9, url: './img/9.jpg', keywords: ['angry', 'funny'] }, { id: 10, url: './img/10.jpg', keywords: ['angry'] },
+{ id: 11, url: './img/11.jpg', keywords: ['angry'] }, { id: 12, url: './img/12.jpg', keywords: ['funny'] },
 { id: 13, url: './img/13.jpg', keywords: ['happy'] }, { id: 14, url: './img/14.jpg', keywords: ['happy'] },
 { id: 15, url: './img/15.jpg', keywords: ['happy'] }, { id: 16, url: './img/16.jpg', keywords: ['happy'] },
 { id: 17, url: './img/17.jpg', keywords: ['happy'] }, { id: 18, url: './img/18.jpg', keywords: ['happy'] },
@@ -21,21 +21,16 @@ let gMeme = {
     isDragging: false,
     isStickerDragging: false,
     stickers: [],
+    selectedStickerIdx: 0,
     lines: [
-        {
-            txt: '',
-            size: 30,
-            align: 'right',
-            color: 'black',
-            pos: { x: 225, y: 50 },
-        },
         // {
         //     txt: '',
         //     size: 30,
-        //     align: 'right',
-        //     color: 'green',
-        //     pos: { x: 225, y: 450 }
-        // }
+        //     align: 'center',
+        //     color: 'black',
+        //     pos: { x: 225, y: 50 },
+        //     font: 'IMPACT'
+        // },
     ]
 }
 
@@ -69,6 +64,10 @@ function setSitcker(sticker) {
     gMeme.stickers.push(sticker)
 }
 
+function setStickerIdx(num) {
+    gMeme.selectedStickerIdx = num - 1
+}
+
 function setLinePos(dx, dy) {
 
     gMeme.lines[gMeme.selectedLineIdx].pos.x += dx
@@ -77,8 +76,8 @@ function setLinePos(dx, dy) {
 
 function setStickerPos(dx, dy) {
 
-    gMeme.stickers[0].pos.x += dx
-    gMeme.stickers[0].pos.y += dy
+    gMeme.stickers[gMeme.selectedStickerIdx].pos.x += dx
+    gMeme.stickers[gMeme.selectedStickerIdx].pos.y += dy
 
 }
 
@@ -87,6 +86,8 @@ function createLine(pos) {
         txt: '',
         size: 30,
         color: 'black',
+        font: 'IMPACT',
+        align: 'center',
         pos
     }
     console.log(line, "lone")
@@ -120,7 +121,7 @@ function deleteLine() {
 
 
 function getClickedLine(clickedPos, canvasWidth) {
-    console.log(clickedPos,canvasWidth)
+    // console.log(clickedPos,canvasWidth)
     // console.log("clickedPos - clickedPos", clickedPos)
     let lineIdx
     if (!gMeme.lines[gMeme.selectedLineIdx].txt) return // no text
@@ -141,14 +142,32 @@ function getClickedLine(clickedPos, canvasWidth) {
     return clickedLine
 }
 
-function getStickerClicked(clickedPos, canvasWidth) {
+function initMeme() {
+    gMeme = {
+        selectedImgId: 1,
+        selectedLineIdx: 0,
+        selectedStickerIdx: 0,
+        isDragging: false,
+        isStickerDragging: false,
+        stickers: [],
+        lines: [
+        ]
+    }
+}
 
+function getStickerClicked(clickedPos, canvasWidth) {
+    let stickerIdx
     const clickedSticker = gMeme.stickers.find((sticker, idx) => {
+        stickerIdx = idx
         return clickedPos.offsetX > sticker.pos.x
-        && clickedPos.offsetX < sticker.pos.x + 150
-        && clickedPos.offsetY > sticker.pos.y
-        && clickedPos.offsetY < sticker.pos.y + 150
+            && clickedPos.offsetX < sticker.pos.x + 150
+            && clickedPos.offsetY > sticker.pos.y
+            && clickedPos.offsetY < sticker.pos.y + 150
     })
+
+    if (clickedSticker) {
+        gMeme.selectedStickerIdx = stickerIdx
+    }
 
     return clickedSticker
 }
@@ -166,6 +185,10 @@ function setMemeImgId(imgId) {
 
 function setColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color
+}
+
+function setFont(font) {
+    gMeme.lines[gMeme.selectedLineIdx].font = font.toUpperCase()
 }
 
 function getMeme() {

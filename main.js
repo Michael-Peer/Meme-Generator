@@ -31,6 +31,7 @@ function onInit() {
     addListeners()
     renderGallery()
     renderKeywords()
+    renderDataList()
 
     // imageX = gElCanvas.width / 2
     // imageY = gElCanvas.height / 2
@@ -117,13 +118,35 @@ function renderKeywords() {
     }
 
     document.querySelector('.keywords-conatiner').innerHTML = strHtml
+}
 
+function renderDataList() {
+    const keywords = getKeywordsAsArray()
+
+    const strHtml = keywords.map((keyword) => {
+        return `
+        <option value="${keyword}">
+        `
+    })
+
+    document.getElementById('keywords').innerHTML = strHtml
 }
 
 function renderMemeEditorScreen() {
     document.querySelector('.grid-container').style.display = 'none'
+    document.querySelector('.main-filters').style.display = 'none'
+
 
     document.querySelector('.meme-container').style.display = 'flex'
+}
+
+function renderMemeGalleryScreen() {
+    document.querySelector('.grid-container').style.display = 'grid'
+    document.querySelector('.main-filters').style.display = 'block'
+
+
+    document.querySelector('.saved-meme-container').classList.add('hide')
+    document.querySelector('.meme-container').style.display = 'none'
 }
 
 function renderCanvas(donwloadImg) {
@@ -145,23 +168,38 @@ function renderCanvas(donwloadImg) {
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 
         if (meme.stickers.length) { //TODO: Loop and draw
-            const elImg = new Image()
-            elImg.src = meme.stickers[0].src
-            elImg.onload = () => {
-                gCtx.drawImage(elImg, meme.stickers[0].pos.x, meme.stickers[0].pos.y, 150, 150)
-                // drawDragAnchor(imageX, imageY);
-                // drawDragAnchor(imageRight, imageY);
-                // drawDragAnchor(imageRight, imageBottom);
-                // drawDragAnchor(imageX, imageBottom);
 
-                drawText()
-            }
+            const funArr = []
+
+            meme.stickers.forEach((sticker) => {
+                funArr.push(loadImage(sticker.src))
+            })
+
+            Promise.all(funArr).then((imgs) => {
+                imgs.forEach((img, idx) => {
+                    // gCtx.drawImage(img, meme.stickers[0].pos.x, meme.stickers[0].pos.y, 150, 150)
+                    gCtx.drawImage(img, meme.stickers[idx].pos.x, meme.stickers[idx].pos.y, 150, 150)
+
+                    drawText()
+                })
+
+            })
+
         } else {
-            drawText(donwloadImg)
+            drawText()
         }
     }
 }
 
+function loadImage(url) {
+    return new Promise((cb, reject) => {
+        let elImg = new Image();
+        elImg.onload = () => cb(elImg);
+        elImg.src = url;
+    });
+}
+
+//draw circle around img
 function drawDragAnchor(x, y) {
     gCtx.beginPath()
     gCtx.arc(x, y, resizerRadius, 0, pi2, false);
@@ -174,7 +212,6 @@ function drawText(donwloadImg) {
 
     meme.lines.forEach((line, idx) => {
 
-        console.log(gShouldCleanFocus)
         if (idx === meme.selectedLineIdx && line.txt && !gShouldCleanFocus) {
             gCtx.textBaseline = 'top'
             const width = gCtx.measureText(line.txt).width
@@ -183,14 +220,15 @@ function drawText(donwloadImg) {
             gCtx.strokeStyle = 'white'
             gCtx.stroke();
 
-        } else if (gShouldCleanFocus) gShouldCleanFocus = false
+        } else if (gShouldCleanFocus && idx === meme.lines.length - 1) gShouldCleanFocus = false //in case of nore than one text 
 
 
         console.log("Drawing text..")
         gCtx.lineWidth = 2
         gCtx.strokeStyle = line.color
         gCtx.fillStyle = 'white'
-        gCtx.font = `${line.size}px IMPACT`
+        gCtx.font = `${line.size}px ${line.font}`
+        console.log(line.align, "Lign Align")
         gCtx.textAlign = line.align
         gCtx.fillText(line.txt, line.pos.x, line.pos.y)
         gCtx.strokeText(line.txt, line.pos.x, line.pos.y)
@@ -225,6 +263,7 @@ function drawText(donwloadImg) {
 
 function onDown(ev) {
     const pos = getEvPos(ev)
+    console.log(pos)
     const clickedLine = getClickedLine(pos, gElCanvas.width)
     const clickedSticker = getStickerClicked(pos, gElCanvas.width)
     if (!clickedLine && !clickedSticker) return
@@ -237,6 +276,7 @@ function onDown(ev) {
 //clear on click outside canvas
 function onMemeContainerClicked(ev) {
     if (ev.target !== document.getElementById('canvas')) {
+        // debugger
         cleanTextFocus()
     }
 }
@@ -282,6 +322,7 @@ function onUp() {
 
 function onImageClicked(imgId) {
     setMemeImgId(imgId)
+    createLine({ x: gElCanvas.width / 2, y: 50 })
     renderMemeEditorScreen()
     renderCanvas()
 }
@@ -303,8 +344,13 @@ function onMobileShareClicked() {
             navigator.share(data)
         })
     })
+}
 
+function onGalleryClicked() {
 
+    renderMemeGalleryScreen()
+    initMeme()
+    resetText()
 }
 
 function onKeywordClicked(keyword) {
@@ -318,7 +364,6 @@ function onMemeTextChanged(elMemeText) {
     console.log(txt, "text")
     setMemeText(txt)
     renderCanvas()
-    // drawText()
 }
 
 function onChangeFontSizeClicked(diff) {
@@ -344,6 +389,13 @@ function onColorChanged(elColor) {
     const color = elColor.value
     if (!color) return
     setColor(color)
+    renderCanvas()
+}
+
+function onFontSelected(elFont) {
+    const font = elFont.value
+    if (!font) return
+    setFont(font)
     renderCanvas()
 }
 
@@ -396,6 +448,7 @@ function onSavedMemeClicked(ev) {
     ev.preventDefault()
     document.querySelector('.saved-meme-container').classList.remove('hide')
     document.querySelector('.grid-container').style.display = 'none'
+    document.querySelector('.meme-container').style.display = 'none'
     const imgs = getSavedMemes()
     if (!imgs) return
 
@@ -412,7 +465,7 @@ function onSearch(elSearch) {
     const searchTxt = elSearch.value.toLowerCase()
     const imgs = getImgs()
     const filteredImgs = imgs.filter((img) => {
-        return img.keywords.every((keyword) => {
+        return img.keywords.some((keyword) => {
             return keyword.includes(searchTxt)
         })
     })
@@ -457,6 +510,7 @@ function onStickerClicked(imgNum) {
         }
     }
     setSitcker(sticker)
+    setStickerIdx(imgNum)
     renderCanvas()
 }
 
@@ -506,7 +560,7 @@ function getEvPos(ev) {
         offsetY: ev.offsetY
     }
 
-    console.log(pos, )
+    console.log(pos,)
 
     if (gTouchEvs.includes(ev.type)) {
         console.log("inside touch")
@@ -519,5 +573,3 @@ function getEvPos(ev) {
     }
     return pos
 }
-
-
