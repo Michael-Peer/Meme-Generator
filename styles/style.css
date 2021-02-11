@@ -169,6 +169,13 @@ a {
     border-radius: 10px;
 }
 
+/* .search-input:focus,
+.search-input{
+    border-top: none;
+    border-right: none;
+    border-left: none;
+} */
+
 
 button>img {
     height: 30px;
