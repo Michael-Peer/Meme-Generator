@@ -6,13 +6,14 @@ const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 
 let gStartPos
 let gShouldCleanFocus = false
+let gIsFirstTimeLoadingCanvas
 
 
 function onInit() {
     gElCanvas = document.getElementById('canvas')
     gCtx = gElCanvas.getContext('2d')
+    gIsFirstTimeLoadingCanvas = true
     addListeners()
-
     renderGallery()
     renderKeywords()
 }
@@ -106,7 +107,13 @@ function renderMemeEditorScreen() {
 }
 
 function renderCanvas(donwloadImg) {
-    resizeCanvas()
+
+    //first time we need to resize the canvas to the correct screen
+    if (gIsFirstTimeLoadingCanvas) {
+        resizeCanvas()
+        gIsFirstTimeLoadingCanvas = false
+    }
+
     const meme = getMeme()
     const imgId = meme.selectedImgId
     const img = getImgById(imgId)
@@ -334,7 +341,6 @@ function onSearch(elSearch) {
         })
     })
 
-    console.log(filteredImgs)
 
     //TODO: MOVE THIS TO THE CENTREAL RENDERING METHOD AND PASS ARRAY
 
@@ -385,9 +391,9 @@ function getImgBase64() {
     return gElCanvas.toDataURL('image/jpeg')
 }
 
-function cleanTextFocus(donwloadImg) {
+function cleanTextFocus() {
     gShouldCleanFocus = true
-    renderCanvas(donwloadImg)
+    renderCanvas()
 }
 
 
