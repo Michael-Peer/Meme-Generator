@@ -9,17 +9,17 @@ let gShouldCleanFocus = false
 let gIsFirstTimeLoadingCanvas
 
 
-const pi2 = Math.PI * 2;
-const resizerRadius = 8;
-const rr = resizerRadius * resizerRadius;
-const draggingResizer = { x: 0, y: 0 };
-let imageX
-let imageY
-let imageWidth
-let imageHeight
-let imageRight
-let imageBottom
-var draggingImage = false;
+// const pi2 = Math.PI * 2;
+// const resizerRadius = 8;
+// const rr = resizerRadius * resizerRadius;
+// const draggingResizer = { x: 0, y: 0 };
+// let imageX
+// let imageY
+// let imageWidth
+// let imageHeight
+// let imageRight
+// let imageBottom
+// var draggingImage = false;
 
 
 
@@ -32,12 +32,12 @@ function onInit() {
     renderGallery()
     renderKeywords()
 
-    imageX = gElCanvas.width / 2
-    imageY = gElCanvas.height / 2
-    imageWidth = 150
-    imageHeight = 150
-    imageRight = imageX + imageWidth
-    imageBottom = imageHeight + imageY
+    // imageX = gElCanvas.width / 2
+    // imageY = gElCanvas.height / 2
+    // imageWidth = 150
+    // imageHeight = 150
+    // imageRight = imageX + imageWidth
+    // imageBottom = imageHeight + imageY
 }
 
 /**
@@ -54,14 +54,12 @@ function addListeners() {
     window.addEventListener('resize', () => {
         resizeCanvas()
         renderCanvas()
+        gIsFirstTimeLoadingCanvas = true
     })
 }
 
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container');
-    console.log("resizing")
-    // Note: changing the canvas dimension this way clears the canvas
-    console.log(elContainer.offsetWidth, elContainer.offsetHeight)
     gElCanvas.width = elContainer.offsetWidth
     gElCanvas.height = elContainer.offsetHeight
 }
@@ -151,10 +149,10 @@ function renderCanvas(donwloadImg) {
             elImg.src = meme.stickers[0].src
             elImg.onload = () => {
                 gCtx.drawImage(elImg, meme.stickers[0].pos.x, meme.stickers[0].pos.y, 150, 150)
-                drawDragAnchor(imageX, imageY);
-                drawDragAnchor(imageRight, imageY);
-                drawDragAnchor(imageRight, imageBottom);
-                drawDragAnchor(imageX, imageBottom);
+                // drawDragAnchor(imageX, imageY);
+                // drawDragAnchor(imageRight, imageY);
+                // drawDragAnchor(imageRight, imageBottom);
+                // drawDragAnchor(imageX, imageBottom);
 
                 drawText()
             }
@@ -244,7 +242,7 @@ function onMemeContainerClicked(ev) {
 }
 
 function onMove(ev) {
-    console.log("isDragging", getMeme().isDragging)
+
     if (getMeme().isDragging) {
         document.body.style.cursor = 'grabbing'
         const pos = getEvPos(ev)
@@ -252,6 +250,7 @@ function onMove(ev) {
         const dy = pos.offsetY - gStartPos.offsetY
 
         setLinePos(dx, dy)
+
         gStartPos = pos
         renderCanvas()
 
@@ -262,7 +261,6 @@ function onMove(ev) {
         const dy = pos.offsetY - gStartPos.offsetY
 
         setStickerPos(dx, dy)
-
 
         gStartPos = pos
         renderCanvas()
@@ -289,11 +287,11 @@ function onImageClicked(imgId) {
 }
 
 function onMobileShareClicked() {
-    // console.log(navigator)
-    // if (!navigator.share) return
+
+    if (!navigator.share) return //if not on mobile
 
     const img = getImgBase64()
-    fetch(img).then((img) => {
+    fetch(img).then((img) => {  //promise
         img.blob().then((imgBlob) => {
             const file = new File([imgBlob], 'fileName.png', { type: imgBlob.type });
             const data = {
@@ -507,7 +505,11 @@ function getEvPos(ev) {
         offsetX: ev.offsetX,
         offsetY: ev.offsetY
     }
+
+    console.log(pos, )
+
     if (gTouchEvs.includes(ev.type)) {
+        console.log("inside touch")
         ev.preventDefault()
         ev = ev.changedTouches[0]
         pos = {
