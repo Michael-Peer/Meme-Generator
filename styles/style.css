@@ -169,12 +169,12 @@ a {
     border-radius: 10px;
 }
 
-/* .search-input:focus,
-.search-input{
-    border-top: none;
-    border-right: none;
-    border-left: none;
-} */
+.search-input:focus,
+.search-input {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid black;
+}
 
 
 button>img {
@@ -192,7 +192,7 @@ button>img {
     padding-top: 10px;
 }
 
-.align-fonts{
+.align-fonts {
     padding-top: 60px;
 }
 

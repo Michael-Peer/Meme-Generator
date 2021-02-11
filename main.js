@@ -289,14 +289,13 @@ function onImageClicked(imgId) {
 }
 
 function onMobileShareClicked() {
-
-    if (!navigator.share) return
+    // console.log(navigator)
+    // if (!navigator.share) return
 
     const img = getImgBase64()
     fetch(img).then((img) => {
         img.blob().then((imgBlob) => {
-            const file = new File([blob], 'fileName.png', { type: blob.type });
-
+            const file = new File([imgBlob], 'fileName.png', { type: imgBlob.type });
             const data = {
                 title: 'Meme',
                 text: 'Look at my meme!',
@@ -412,7 +411,7 @@ function onSavedMemeClicked(ev) {
 }
 
 function onSearch(elSearch) {
-    const searchTxt = elSearch.value
+    const searchTxt = elSearch.value.toLowerCase()
     const imgs = getImgs()
     const filteredImgs = imgs.filter((img) => {
         return img.keywords.every((keyword) => {

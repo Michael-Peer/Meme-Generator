@@ -29,9 +29,14 @@
     <section class="main-filters ">
         <div class="filters-container main-container flex  flex-start align-center">
             <div class="search-container flex ">
-                <input type="search" id="search" name="search" placeholder="Press enter to search"
+                <input list="keywords" class="search-input" type="search" id="search" name="search" placeholder="Search"
                     oninput="onSearch(this)">
             </div>
+
+            <datalist id="keywords">
+                <option value="Happy">
+                <option value="Angry">
+              </datalist>
 
             <div class="keywords-conatiner flex align-center">
 
@@ -80,7 +85,7 @@
                 <input onchange="onUploadImage(this)" type="file" id="img-upload">
             </div>
 
-            <div class="mobile-share" onclick="onMobileShareClicked()">Mobile Share</div>
+            <a href="#" class="mobile-share" onclick="onMobileShareClicked()">Mobile Share</a>
 
             <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                 <input name="img" id="imgData" type="hidden" />
