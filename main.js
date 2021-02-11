@@ -91,7 +91,7 @@ function renderKeywords() {
     for (const keyword in keywords) {
         const fontSize = keywords[keyword] + 14 + 'px'
         strHtml += `
-        <div onclick="onKeywordClicked('${keyword}')" style="font-size: ${fontSize}">${keyword}</div>
+        <div onclick="onKeywordClicked('${keyword}')" style="font-size: ${fontSize}; margin-right: 30px">${keyword}</div>
         `
     }
 
@@ -106,6 +106,7 @@ function renderMemeEditorScreen() {
 }
 
 function renderCanvas(donwloadImg) {
+    resizeCanvas()
     const meme = getMeme()
     const imgId = meme.selectedImgId
     const img = getImgById(imgId)
@@ -328,9 +329,12 @@ function onSearch(elSearch) {
     const searchTxt = elSearch.value
     const imgs = getImgs()
     const filteredImgs = imgs.filter((img) => {
-        return img.keywords.includes(searchTxt)
+        return img.keywords.every((keyword) => {
+            return keyword.includes(searchTxt)
+        })
     })
 
+    console.log(filteredImgs)
 
     //TODO: MOVE THIS TO THE CENTREAL RENDERING METHOD AND PASS ARRAY
 

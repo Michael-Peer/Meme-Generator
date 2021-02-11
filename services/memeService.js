@@ -43,6 +43,15 @@ function getKeywords() {
     return gKeywords
 }
 
+function getKeywordsAsArray() {
+    const keywords = []
+    for (const keyword in gKeywords) {
+        keywords.push(keyword)
+    }
+    // console.log(keywords)
+    return keywords
+}
+
 function increaseKeywordCount(keyword) {
     gKeywords[keyword]++
 }

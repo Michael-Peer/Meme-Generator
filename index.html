@@ -25,6 +25,20 @@
         </div>
     </header>
 
+
+    <section class="main-filters ">
+        <div class="filters-container main-container flex  flex-start align-center">
+            <div class="search-container flex ">
+                <input type="search" id="search" name="search" placeholder="Press enter to search"
+                    oninput="onSearch(this)">
+            </div>
+
+            <div class="keywords-conatiner flex align-center">
+
+            </div>
+        </div>
+    </section>
+
     <section class="meme-container hide main-container">
 
         <div class="canvas-container">
@@ -35,10 +49,10 @@
         <div class="controllers-container flex flex-column">
             <input type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
 
-            <div class="add-delete-next-line flex">
-                <button class="btnic" onclick="onDeleteLineClicked()">Delete Line</button>
-                <button class="btnic" onclick="onAddNewLine()">Add Line</button>
-                <button class="btnic" onclick="onNextLineClicked()">Next Line</button>
+            <div class="add-delete-next-line flex flex-center">
+                <button class="btnic" onclick="onDeleteLineClicked()"><img src="./img/icons/trash.png" alt=""></button>
+                <button class="btnic" onclick="onAddNewLine()"><img src="./img/icons/add.png" alt=""></button>
+                <button class="btnic" onclick="onNextLineClicked()"><img src="./img/icons/up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
             </div>
 
             <div class="align-fonts flex">
@@ -72,13 +86,7 @@
 
     </section>
 
-    <div class="search-container flex">
-        <input type="search" id="search" name="search" placeholder="Press enter to search" onchange="onSearch(this)">
-    </div>
 
-    <div class="keywords-conatiner flex align-center">
-
-    </div>
 
 
     <section class="grid-container main-container">
