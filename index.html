@@ -11,14 +11,13 @@
 
 <body onload="onInit()">
 
-
     <header class="main-header">
         <div class="header-contain main-container flex space-between align-center">
             <div class="logo">
                 <img src="./img/LOGO.png" alt="">
             </div>
             <ul class="navbar-conntainer clean-list flex ">
-                <li> <a onclick="onGalleryClicked()" class="flex align-center nav-item" href="#">Galley</a> </li>
+                <li> <a onclick="onGalleryClicked()" class="flex align-center nav-item" href="#">Gallery</a> </li>
                 <li> <a onclick="onSavedMemeClicked(event)" class="flex align-center nav-item" href="">Saved Memes</a>
                 </li>
             </ul>
@@ -26,9 +25,11 @@
         </div>
     </header>
 
+    <!--Filters and Search-->
 
     <section class="main-filters ">
         <div class="filters-container main-container flex  flex-start align-center">
+
             <div class="search-container flex ">
                 <input list="keywords" class="search-input" type="search" id="search" name="search" placeholder="Search"
                     oninput="onSearch(this)">
@@ -42,7 +43,10 @@
         </div>
     </section>
 
-    <section class="meme-container hide main-container" onclick="onMemeContainerClicked(event)">
+
+    <!--Controller-->
+
+    <main class="meme-container hide main-container" onclick="onMemeContainerClicked(event)">
 
         <div class="canvas-container">
             <canvas onclick="onCanvasClicked(event)" id="canvas" width="500" height="500"
@@ -60,8 +64,8 @@
                         src="./img/icons/up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
             </div>
 
-            <div class="align-fonts flex">
 
+            <div class="align-fonts flex">
                 <button class="btnic" onclick="onChangeFontSizeClicked(1)"><img
                         src="./img/icons/increase font - icon.png"></button>
                 <button class="btnic" onclick="onChangeFontSizeClicked(-1)"><img
@@ -74,8 +78,8 @@
                         src="./img/icons/center-text-alignment.png" alt=""></button>
                 <button class="btnic" onclick="onAligmentClicked('left')"><img src="./img/icons/align-to-right.png"
                         alt=""></button>
-
             </div>
+
 
             <div class="font-family-color-container flex">
                 <select class="font-family-input" onchange="onFontSelected(this)" name="font" id="font">
@@ -97,9 +101,6 @@
                 <input onchange="onUploadImage(this)" type="file" id="img-upload">
             </div>
 
-
-            <!-- <div class="save-share-container flex  space-around"> -->
-
             <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                 <input name="img" id="imgData" type="hidden" />
                 <button class="btn btn-share btn-m" type="submit">Publish</button>
@@ -114,11 +115,10 @@
                 <div class="share-container btn-m"></div>
             </div>
 
-
-            <!-- </div> -->
         </div>
+    </main>
 
-    </section>
+    <!--Gallery-->
 
     <section class="grid-container main-container">
     </section>

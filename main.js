@@ -97,6 +97,7 @@ function renderGallery() {
     const imgs = getImgs()
     if (!imgs.length) return
 
+
     let strHtml = imgs.map((img) => {
         return `
         <img onclick="onImageClicked(${img.id})" src="${img.url}">
@@ -178,16 +179,7 @@ function renderCanvas(donwloadImg) {
 }
 
 
-function loadImage(url) {
-    return new Promise((cb, reject) => {
-        let elImg = new Image();
-        elImg.onload = () => cb(elImg);
-        elImg.src = url;
-    });
-}
-
-
-//draw circle around img
+//draw circle around img edges
 function drawDragAnchor(x, y) {
     gCtx.beginPath()
     gCtx.arc(x, y, resizerRadius, 0, pi2, false);
@@ -198,19 +190,10 @@ function drawDragAnchor(x, y) {
 
 function drawText(donwloadImg) {
     const meme = getMeme()
-
     meme.lines.forEach((line, idx) => {
-
         if (idx === meme.selectedLineIdx && line.txt && !gShouldCleanFocus) {
-            gCtx.textBaseline = 'top'
-            const width = gCtx.measureText(line.txt).width
-            gCtx.beginPath();
-            gCtx.rect(10, line.pos.y, gElCanvas.width - 20, parseInt(line.size, 10))
-            gCtx.strokeStyle = 'white'
-            gCtx.stroke();
-
+            drawFrame(line)
         } else if (gShouldCleanFocus && idx === meme.lines.length - 1) gShouldCleanFocus = false //in case of more than one text 
-
         gCtx.lineWidth = 2
         gCtx.strokeStyle = line.color
         gCtx.fillStyle = 'white'
@@ -220,6 +203,15 @@ function drawText(donwloadImg) {
         gCtx.strokeText(line.txt, line.pos.x, line.pos.y)
         if (donwloadImg) donwloadImg()
     })
+}
+
+function drawFrame(line) {
+    gCtx.textBaseline = 'top'
+    const width = gCtx.measureText(line.txt).width
+    gCtx.beginPath();
+    gCtx.rect(10, line.pos.y, gElCanvas.width - 20, parseInt(line.size, 10))
+    gCtx.strokeStyle = 'white'
+    gCtx.stroke();
 }
 
 
@@ -263,6 +255,7 @@ function onGalleryClicked() {
     initMeme()
     resetText()
     toggleMenu()
+    renderGallery()
 }
 
 
@@ -270,7 +263,6 @@ function onKeywordClicked(keyword) {
     increaseKeywordCount(keyword)
     renderKeywords()
 }
-
 
 
 function onMemeTextChanged(elMemeText) {
@@ -378,9 +370,7 @@ function onSaveClicked() {
 
 function onSavedMemeClicked(ev) {
     ev.preventDefault()
-    document.querySelector('.saved-meme-container').classList.remove('hide')
-    document.querySelector('.grid-container').style.display = 'none'
-    document.querySelector('.meme-container').style.display = 'none'
+    renderSavedMemesScreen()
     const imgs = getSavedMemes()
     if (!imgs) return
 
@@ -400,7 +390,7 @@ function onSearch(elSearch) {
     const imgs = getImgs()
     const filteredImgs = imgs.filter((img) => {
         return img.keywords.some((keyword) => {
-            return keyword.includes(searchTxt)
+            return keyword.includes(searchTxt) //arr in arr
         })
     })
 
@@ -430,7 +420,10 @@ function onUploadImage(input) {
 
         elImg.onload = () => {
             gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+            setUploadAsCurrImg(elImg.src)
         }
+
+        // setUploadedImg()
     }
 }
 
@@ -485,8 +478,13 @@ function renderMemeGalleryScreen() {
     document.querySelector('.grid-container').style.display = 'grid'
     document.querySelector('.main-filters').style.display = 'block'
 
-
     document.querySelector('.saved-meme-container').classList.add('hide')
+    document.querySelector('.meme-container').style.display = 'none'
+}
+
+function renderSavedMemesScreen() {
+    document.querySelector('.saved-meme-container').classList.remove('hide')
+    document.querySelector('.grid-container').style.display = 'none'
     document.querySelector('.meme-container').style.display = 'none'
 }
 
@@ -494,4 +492,12 @@ function renderMemeGalleryScreen() {
 function resetText() {
     const memeText = document.getElementById('meme-text')
     memeText.value = ''
+}
+
+function loadImage(url) {
+    return new Promise((cb, reject) => {
+        let elImg = new Image();
+        elImg.onload = () => cb(elImg);
+        elImg.src = url;
+    });
 }

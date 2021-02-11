@@ -1,10 +1,13 @@
-/**
- * 
- * 
- * DRAG & DROP
- * 
- * 
- * **/
+'use strict'
+
+//clear on click outside canvas
+function onMemeContainerClicked(ev) {
+    if (ev.target !== document.getElementById('canvas')) {
+        // debugger
+        cleanTextFocus()
+    }
+}
+
 
 function onDown(ev) {
     const pos = getEvPos(ev)
@@ -16,14 +19,6 @@ function onDown(ev) {
     else setIsStickerDragging(true)
     gStartPos = pos
     document.body.style.cursor = 'grab'
-}
-
-//clear on click outside canvas
-function onMemeContainerClicked(ev) {
-    if (ev.target !== document.getElementById('canvas')) {
-        // debugger
-        cleanTextFocus()
-    }
 }
 
 function onMove(ev) {

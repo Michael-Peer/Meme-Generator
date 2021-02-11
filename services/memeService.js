@@ -39,34 +39,40 @@ function getKeywords() {
     return gKeywords
 }
 
+
 function getKeywordsAsArray() {
     const keywords = []
     for (const keyword in gKeywords) {
         keywords.push(keyword)
     }
-    // console.log(keywords)
     return keywords
 }
+
 
 function increaseKeywordCount(keyword) {
     gKeywords[keyword]++
 }
 
+
 function setIsDragging(isDragging) {
     gMeme.isDragging = isDragging
 }
+
 
 function setIsStickerDragging(isDragging) {
     gMeme.isStickerDragging = isDragging
 }
 
+
 function setSitcker(sticker) {
     gMeme.stickers.push(sticker)
 }
 
+
 function setStickerIdx(num) {
     gMeme.selectedStickerIdx = num - 1
 }
+
 
 function setLinePos(dx, dy) {
 
@@ -74,12 +80,12 @@ function setLinePos(dx, dy) {
     gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
 }
 
-function setStickerPos(dx, dy) {
 
+function setStickerPos(dx, dy) {
     gMeme.stickers[gMeme.selectedStickerIdx].pos.x += dx
     gMeme.stickers[gMeme.selectedStickerIdx].pos.y += dy
-
 }
+
 
 function createLine(pos) {
     const line = {
@@ -94,6 +100,7 @@ function createLine(pos) {
     gMeme.lines.push(line)
     gMeme.selectedLineIdx = gMeme.lines.length - 1
 }
+
 
 function deleteLine() {
     const lineIdx = gMeme.selectedLineIdx
@@ -116,9 +123,21 @@ function deleteLine() {
     }
 
     console.log(gMeme.lines, "lines ")
-
 }
 
+
+function setUploadAsCurrImg(imgSrc) {
+    console.log(gImgs)
+
+    gImgs.push({
+        id: gImgs.length + 1,
+        url: imgSrc,
+        keywords: ['my images']
+    })
+    console.log(gImgs)
+
+    gMeme.selectedImgId = gImgs.length
+}
 
 
 function getClickedLine(clickedPos, canvasWidth) {
@@ -143,6 +162,7 @@ function getClickedLine(clickedPos, canvasWidth) {
     return clickedLine
 }
 
+
 function initMeme() {
     gMeme = {
         selectedImgId: 1,
@@ -155,6 +175,7 @@ function initMeme() {
         ]
     }
 }
+
 
 function getStickerClicked(clickedPos, canvasWidth) {
     let stickerIdx
@@ -173,6 +194,7 @@ function getStickerClicked(clickedPos, canvasWidth) {
     return clickedSticker
 }
 
+
 function setNextLine() {
     const selectedLine = gMeme.selectedLineIdx === gMeme.lines.length - 1 ? 0 : gMeme.selectedLineIdx + 1
     console.log(selectedLine, "selectedLine")
@@ -180,30 +202,37 @@ function setNextLine() {
     renderCanvas()
 }
 
+
 function setMemeImgId(imgId) {
     gMeme.selectedImgId = imgId
 }
+
 
 function setColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color
 }
 
+
 function setFont(font) {
     gMeme.lines[gMeme.selectedLineIdx].font = font.toUpperCase()
 }
+
 
 function getMeme() {
     return gMeme
 }
 
+
 function getImgs() {
     return gImgs
 }
+
 
 function setMemeText(txt) {
     console.log(gMeme.lines, gMeme.selectedLineIdx)
     gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
+
 
 function getImgById(imgId) {
     const img = gImgs.find((img) => {
@@ -212,6 +241,7 @@ function getImgById(imgId) {
     return img
 }
 
+
 function setFontSize(diff) {
     console.log(gMeme.selectedLineIdx, "setFontSize")
     let fontSize = gMeme.lines[gMeme.selectedLineIdx].size
@@ -219,9 +249,11 @@ function setFontSize(diff) {
     gMeme.lines[gMeme.selectedLineIdx].size = fontSize + diff
 }
 
+
 function setAlignment(alignmentCode) {
     gMeme.lines[gMeme.selectedLineIdx].align = alignmentCode
 }
+
 
 function saveMeme(imgData) {
     const memes = loadFromStorage(KEY) || []
@@ -229,9 +261,11 @@ function saveMeme(imgData) {
     _saveMemeToStorage(memes)
 }
 
+
 function getSavedMemes() {
     return loadFromStorage(KEY)
 }
+
 
 function _saveMemeToStorage(memes) {
     saveToStorage(KEY, memes)

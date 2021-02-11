@@ -2,16 +2,26 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: montserrat;
+    src: url(../fonts/mont/Montserrat-Regular.ttf);
+}
+
 body {
     background-color: #E3E3E3;
     margin: 0;
+    font-family: montserrat;
 }
 
 a {
     text-decoration: none;
 }
 
-#canvas {}
+button,
+input,
+.sticker-container>img {
+    cursor: pointer;
+}
 
 .canvas-container {
     position: relative;
@@ -94,7 +104,7 @@ a {
 }
 
 .navbar-conntainer .nav-item {
-    font-family: lato-bold;
+    font-family: montserrat;
     color: #ffffff;
     font-size: 1rem;
     text-shadow: 0 1px 0 #1e1e1e;
@@ -159,8 +169,7 @@ a {
 }
 
 .btn-share {
-    -webkit-border-radius: 9;
-    -moz-border-radius: 9;
+
     border-radius: 9px;
     font-family: Arial;
     color: #000000;
@@ -168,6 +177,7 @@ a {
     background: #ffffff;
     padding: 10px 20px 10px 20px;
     text-decoration: none;
+
 
 
 }
@@ -181,10 +191,6 @@ a {
 .menu-btn {
     display: none;
 }
-
-
-
-
 
 /* HELPERS */
 .flex {
@@ -207,8 +213,6 @@ a {
 .self-start {
     align-self: flex-start;
 }
-
-
 
 .flex.align-center {
     align-items: center;
@@ -246,7 +250,6 @@ a {
     padding: 12px 14px;
     text-align: center;
     font-size: 17px;
-    cursor: pointer;
     border-radius: 10px;
 }
 
@@ -282,6 +285,10 @@ button>img {
 
 .align-fonts {
     padding-top: 60px;
+}
+
+.image-upload {
+    margin: .5rem;
 }
 
 .align-fonts>*:not(:last-child),
@@ -356,15 +363,7 @@ button>img {
     }
 
     .btnic {
-        background-color: #FFFFFF;
-        border: none;
-        color: white;
         padding: 8px 10px;
-        text-align: center;
-        font-size: 17px;
-        cursor: pointer;
-        border-radius: 10px;
-
     }
 
     .align-fonts {
