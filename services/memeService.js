@@ -108,6 +108,7 @@ function deleteLine() {
             txt: '',
             size: 30,
             color: 'black',
+            font: 'IMPACT',
             pos: { x: 225, y: 50 }
         }
         gMeme.lines.push(line)

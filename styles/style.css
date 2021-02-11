@@ -128,10 +128,25 @@ a {
     padding: 40px;
 }
 
-.input-text-meme{
+.font-family-input,
+.input-text-meme {
     border-radius: 20px;
     height: 40px;
     outline: none;
+}
+
+.font-family-color-container {
+    margin: .75rem;
+    align-items: center;
+}
+
+.font-family-input {
+    flex: 6.5;
+    margin-right: .5rem;
+}
+
+.color-input {
+    flex: 3.5;
 }
 
 .controllers-container {
@@ -162,9 +177,22 @@ a {
     text-decoration: none;
 }
 
+
+.menu-btn {
+    display: none;
+}
+
+
+
+
+
 /* HELPERS */
 .flex {
     display: flex;
+}
+
+.btn-m {
+    margin: .3rem;
 }
 
 .flex.space-between {
@@ -280,25 +308,9 @@ button>img {
     }
 }
 
+
+
 @media (max-width: 830px) {
-
-    .main-container {
-        /* max-width: 620px; */
-    }
-
-    .meme-container {
-        /* margin: 30px; */
-    }
-
-    .canvas-container {
-        /* margin: 0 auto; */
-        /* padding: 20px; */
-        width: 350px;
-        height: 350px;
-    }
-}
-
-@media (max-width: 720px) {
 
     .grid-container,
     .saved-meme-container {
@@ -356,11 +368,49 @@ button>img {
     }
 
     .align-fonts {
-        justify-content: space-around;
+        /* justify-content: space-around; */
+        justify-content: center;
         padding-top: 15px;
     }
-    .input-text-meme{
+
+    .input-text-meme {
         margin-top: 5px;
+    }
+
+    .navbar-conntainer {
+        position: fixed;
+        right: 0;
+        top: 0;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        background-color: rgba(255, 127, 0, 0.85);
+        align-items: center;
+        transform: translateY(-100%);
+        transition: transform 0.8s;
+        z-index: 100;
+    }
+
+    .menu-btn {
+        display: block;
+        font-size: 2rem;
+        border: none;
+        color: white;
+        background: rgb(255, 127, 0);
+    }
+
+    .main-header .navbar-conntainer>* {
+        width: 100%;
+        height: 90px;
+        border-right: none;
+    }
+
+    .main-header .navbar-conntainer>*:first-child {
+        border-left: none;
+    }
+
+    body.menu-open .navbar-conntainer {
+        transform: translateY(0);
     }
 
 }

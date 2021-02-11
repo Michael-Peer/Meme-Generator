@@ -22,6 +22,7 @@
                 <li> <a onclick="onSavedMemeClicked(event)" class="flex align-center nav-item" href="">Saved Memes</a>
                 </li>
             </ul>
+            <button onclick="toggleMenu()" class="menu-btn">&#9776</button>
         </div>
     </header>
 
@@ -49,7 +50,8 @@
         </div>
 
         <div class="controllers-container flex flex-column">
-            <input class="input-text-meme" type="text" id="meme-text" name="meme-text" placeholder="Text" oninput="onMemeTextChanged(this)">
+            <input class="input-text-meme" type="text" id="meme-text" name="meme-text" placeholder="Text"
+                oninput="onMemeTextChanged(this)">
 
             <div class="add-delete-next-line flex flex-center">
                 <button class="btnic" onclick="onDeleteLineClicked()"><img src="./img/icons/trash.png" alt=""></button>
@@ -75,18 +77,20 @@
 
             </div>
 
-            <input type="color" oninput="onColorChanged(this)">Pick Color</input>
-            <button class="btn-share self-start" onclick="onSaveClicked()">Savw</button>
+            <div class="font-family-color-container flex">
+                <select class="font-family-input" onchange="onFontSelected(this)" name="font" id="font">
+                    <option value="Impact">Impact</option>
+                    <option value="Arial">Arial</option>
+                </select>
+                <input type="color" oninput="onColorChanged(this)"></input>
+            </div>
 
-            <select onchange="onFontSelected(this)" name="font" id="font">
-                <option value="Impact">Impact</option>
-                <option value="Arial">Arial</option>
-            </select>
 
             <div class="sticker-container flex align-center space-around">
                 <img onclick="onStickerClicked(1)" src="./img/stickers/cat1.png" alt="">
                 <img onclick="onStickerClicked(2)" src="./img/stickers/cat2.png" alt="">
                 <img onclick="onStickerClicked(3)" src="./img/stickers/cat3.png" alt="">
+                <img onclick="onStickerClicked(4)" src="./img/stickers/cat4.png" alt="">
             </div>
 
             <div class="image-upload">
@@ -94,16 +98,26 @@
             </div>
 
 
+            <!-- <div class="save-share-container flex  space-around"> -->
+
             <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                 <input name="img" id="imgData" type="hidden" />
-                <button class="btn btn-share" type="submit">Publish</button>
-                <a class="btn btn-share" class="download-link" href="#" onclick="onDownloadClicked(this)"
+                <button class="btn btn-share btn-m" type="submit">Publish</button>
+                <a class="btn btn-share btn-m" class="download-link" href="#" onclick="onDownloadClicked(this)"
                     download="meme.jpg">Download</a>
-                <a class="btn btn-share self-start" href="#" class="mobile-share"
-                    onclick="onMobileShareClicked()">Mobile Share</a>
-                <div class="share-container"></div>
             </form>
+
+            <div class="save-mobile-share-container">
+                <button class="btn-share self-start btn-m" onclick="onSaveClicked()">Save</button>
+                <a class="btn btn-share self-start btn-m" href="#" class="mobile-share"
+                    onclick="onMobileShareClicked()">Mobile Share</a>
+                <div class="share-container btn-m"></div>
+            </div>
+
+
+            <!-- </div> -->
         </div>
+
     </section>
 
     <section class="grid-container main-container">
@@ -114,7 +128,8 @@
 
 
 
-
+    <script src="./services/utilsSerivce.js"></script>
+    <script src="./dragController.js"></script>
     <script src="./services/shareService.js"></script>
     <script src="./services/storageService.js"></script>
     <script src="./services/memeService.js"></script>
