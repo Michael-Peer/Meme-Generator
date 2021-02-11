@@ -19,6 +19,7 @@ let gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
     isDragging: false,
+    isStickerDragging: false,
     stickers: [],
     lines: [
         {
@@ -60,8 +61,12 @@ function setIsDragging(isDragging) {
     gMeme.isDragging = isDragging
 }
 
-function setSitcker(stickerSrc) {
-    gMeme.stickers.push(stickerSrc)
+function setIsStickerDragging(isDragging) {
+    gMeme.isStickerDragging = isDragging
+}
+
+function setSitcker(sticker) {
+    gMeme.stickers.push(sticker)
 }
 
 function setLinePos(dx, dy) {
@@ -69,6 +74,17 @@ function setLinePos(dx, dy) {
     gMeme.lines[gMeme.selectedLineIdx].pos.x += dx
     gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
 }
+
+function setStickerPos(dx, dy) {
+
+    gMeme.stickers[0].pos.x += dx
+    gMeme.stickers[0].pos.y += dy
+
+    console.log(    gMeme.stickers[0].pos.x += dx     )
+
+        console.log(      gMeme.stickers[0].pos.y += dy)
+    }
+
 
 function createLine(pos) {
     const line = {
@@ -108,6 +124,7 @@ function deleteLine() {
 
 
 function getClickedLine(clickedPos, canvasWidth) {
+    console.log(clickedPos,canvasWidth)
     // console.log("clickedPos - clickedPos", clickedPos)
     let lineIdx
     if (!gMeme.lines[gMeme.selectedLineIdx].txt) return // no text
@@ -126,6 +143,18 @@ function getClickedLine(clickedPos, canvasWidth) {
     console.log(clickedLine, "clicked line")
 
     return clickedLine
+}
+
+function getStickerClicked(clickedPos, canvasWidth) {
+
+    const clickedSticker = gMeme.stickers.find((sticker, idx) => {
+        return clickedPos.offsetX > sticker.pos.x
+        && clickedPos.offsetX < sticker.pos.x + 150
+        && clickedPos.offsetY > sticker.pos.y
+        && clickedPos.offsetY < sticker.pos.y + 150
+    })
+
+    return clickedSticker
 }
 
 function setNextLine() {

@@ -9,6 +9,20 @@ let gShouldCleanFocus = false
 let gIsFirstTimeLoadingCanvas
 
 
+const pi2 = Math.PI * 2;
+const resizerRadius = 8;
+const rr = resizerRadius * resizerRadius;
+const draggingResizer = { x: 0, y: 0 };
+let imageX
+let imageY
+let imageWidth
+let imageHeight
+let imageRight
+let imageBottom
+var draggingImage = false;
+
+
+
 function onInit() {
     gElCanvas = document.getElementById('canvas')
     gCtx = gElCanvas.getContext('2d')
@@ -16,6 +30,13 @@ function onInit() {
     addListeners()
     renderGallery()
     renderKeywords()
+
+    imageX = gElCanvas.width / 2
+    imageY = gElCanvas.height / 2
+    imageWidth = 150
+    imageHeight = 150
+    imageRight = imageX + imageWidth
+    imageBottom = imageHeight + imageY
 }
 
 /**
@@ -126,15 +147,27 @@ function renderCanvas(donwloadImg) {
 
         if (meme.stickers.length) { //TODO: Loop and draw
             const elImg = new Image()
-            elImg.src = meme.stickers[0]
+            elImg.src = meme.stickers[0].src
             elImg.onload = () => {
-                gCtx.drawImage(elImg, gElCanvas.width / 2, gElCanvas.height / 2, 150, 150)
+                gCtx.drawImage(elImg, meme.stickers[0].pos.x, meme.stickers[0].pos.y, 150, 150)
+                drawDragAnchor(imageX, imageY);
+                drawDragAnchor(imageRight, imageY);
+                drawDragAnchor(imageRight, imageBottom);
+                drawDragAnchor(imageX, imageBottom);
+
                 drawText()
             }
         } else {
             drawText(donwloadImg)
         }
     }
+}
+
+function drawDragAnchor(x, y) {
+    gCtx.beginPath()
+    gCtx.arc(x, y, resizerRadius, 0, pi2, false);
+    gCtx.closePath();
+    gCtx.fill();
 }
 
 function drawText(donwloadImg) {
@@ -193,8 +226,11 @@ function drawText(donwloadImg) {
 
 function onDown(ev) {
     const pos = getEvPos(ev)
-    if (!getClickedLine(pos, gElCanvas.width)) return
-    setIsDragging(true)
+    const clickedLine = getClickedLine(pos, gElCanvas.width)
+    const clickedSticker = getStickerClicked(pos, gElCanvas.width)
+    if (!clickedLine && !clickedSticker) return
+    else if (clickedLine) setIsDragging(true)
+    else setIsStickerDragging(true)
     gStartPos = pos
     document.body.style.cursor = 'grab'
 }
@@ -208,6 +244,17 @@ function onMove(ev) {
         const dy = pos.offsetY - gStartPos.offsetY
 
         setLinePos(dx, dy)
+        gStartPos = pos
+        renderCanvas()
+
+    } else if (getMeme().isStickerDragging) {
+        document.body.style.cursor = 'grabbing'
+        const pos = getEvPos(ev)
+        const dx = pos.offsetX - gStartPos.offsetX
+        const dy = pos.offsetY - gStartPos.offsetY
+
+        setStickerPos(dx, dy)
+
 
         gStartPos = pos
         renderCanvas()
@@ -215,8 +262,9 @@ function onMove(ev) {
 }
 
 function onUp() {
+    const meme = getMeme()
+    meme.isDragging ? setIsDragging(false) : setIsStickerDragging(false)
     document.body.style.cursor = 'unset'
-    setIsDragging(false)
 }
 
 /**
@@ -287,24 +335,25 @@ function onCanvasClicked(ev) {
     const memeText = document.getElementById('meme-text')
     const meme = getMeme()
     memeText.value = meme.lines[meme.selectedLineIdx].txt
-    document.getElementById('meme-text').focus()
+    focusLineText()
 }
 
 function onDeleteLineClicked() {
     deleteLine()
     resetText()
-    document.getElementById('meme-text').focus() // TODO: extract to function
+    focusLineText()
     renderCanvas()
 }
 
 function onAddNewLine() {
     const meme = getMeme()
     const memeLength = meme.lines.length
-    document.getElementById('meme-text').focus()
+    focusLineText()
     if (meme.lines[memeLength - 1].txt === '') return //can't go to other lines before the previous one filled with text
     let pos
-    if (!memeLength) pos = { x: 225, y: 50 }
-    else if (memeLength === 1) pos = { x: 225, y: 450 }
+
+    if (!memeLength) pos = { x: gElCanvas.width / 2, y: 50 }
+    else if (memeLength === 1) pos = { x: gElCanvas.width / 2, y: gElCanvas.height - 50 }
     else pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
     console.log(pos, "pos")
     createLine(pos)
@@ -351,13 +400,36 @@ function onSearch(elSearch) {
     }).join('')
 
     document.querySelector('.grid-container').innerHTML = strHtml
+}
 
+function onUploadImage(input) {
+    let reader
+    let elImg = new Image()
+    if (input.files && input.files[0]) {
+        reader = new FileReader()
 
+        reader.onload = (ev) => {
+            elImg.src = ev.target.result
+        }
+
+        reader.readAsDataURL(input.files[0]);
+
+        elImg.onload = () => {
+            gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+        }
+    }
 }
 
 function onStickerClicked(imgNum) {
     const src = `./img/stickers/cat${imgNum}.png`
-    setSitcker(src)
+    const sticker = {
+        src,
+        pos: {
+            x: gElCanvas.width / 2,
+            y: gElCanvas.height / 2
+        }
+    }
+    setSitcker(sticker)
     renderCanvas()
 }
 
@@ -394,6 +466,10 @@ function getImgBase64() {
 function cleanTextFocus() {
     gShouldCleanFocus = true
     renderCanvas()
+}
+
+function focusLineText() {
+    document.getElementById('meme-text').focus()
 }
 
 

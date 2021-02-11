@@ -76,6 +76,10 @@
                 <img onclick="onStickerClicked(1)" src="./img/stickers/cat1.png" alt="">
             </div>
 
+            <div class="image-upload">
+                <input onchange="onUploadImage(this)" type="file" id="img-upload">
+            </div>
+
             <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                 <input name="img" id="imgData" type="hidden" />
                 <button class="btn" type="submit">Publish</button>
