@@ -45,7 +45,7 @@ function onInit() {
  * 
  * 
  * Listeners
- * 
+ * s
  * 
  * **/
 
@@ -361,6 +361,10 @@ function onAddNewLine() {
     resetText()
 }
 
+function onInputTextLostFocus() {
+    cleanTextFocus()
+}
+
 
 function onSaveClicked() {
     const imgData = getImgBase64()
@@ -431,7 +435,6 @@ function onUploadImage(input) {
 function onDownloadClicked(elLink) {
     console.log(elLink)
 
-    cleanTextFocus()
     const dataImg = getImgBase64()
     elLink.href = dataImg
 

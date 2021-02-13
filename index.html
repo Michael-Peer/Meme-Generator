@@ -55,7 +55,7 @@
 
         <div class="controllers-container flex flex-column">
             <input class="input-text-meme" type="text" id="meme-text" name="meme-text" placeholder="Text"
-                oninput="onMemeTextChanged(this)">
+                oninput="onMemeTextChanged(this)" onblur="onInputTextLostFocus()">
 
             <div class="add-delete-next-line flex flex-center">
                 <button class="btnic" onclick="onDeleteLineClicked()"><img src="./img/icons/trash.png" alt=""></button>
