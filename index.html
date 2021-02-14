@@ -32,7 +32,7 @@
 
             <div class="search-container flex ">
                 <input list="keywords" class="search-input" type="search" id="search" name="search" placeholder="Search"
-                    oninput="onSearch(this)">
+                    oninput="onSearch(this.value)">
             </div>
 
             <datalist id="keywords">
@@ -86,7 +86,10 @@
                     <option value="Impact">Impact</option>
                     <option value="Arial">Arial</option>
                 </select>
-                <input type="color" oninput="onColorChanged(this)"></input>
+
+                <input type="color" id="color-input" oninput="onColorChanged(this)" hidden></input>
+                <button class="btnic" onclick="onPickColor()"><img src="./img/icons/paint-board-and-brush.png"
+                        alt=""></button>
             </div>
 
 

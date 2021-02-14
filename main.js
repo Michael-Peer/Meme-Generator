@@ -261,8 +261,15 @@ function onGalleryClicked() {
 
 function onKeywordClicked(keyword) {
     increaseKeywordCount(keyword)
+    onSearch(keyword)
+    renderSearchText(keyword)
     renderKeywords()
 }
+
+function renderSearchText(keyword) {
+    document.getElementById('search').value = keyword.charAt(0).toUpperCase() + keyword.slice(1);
+}
+
 
 
 function onMemeTextChanged(elMemeText) {
@@ -308,6 +315,12 @@ function onColorChanged(elColor) {
     if (!color) return
     setColor(color)
     renderCanvas()
+}
+
+function onPickColor() {
+    const elColor = document.getElementById('color-input')
+    elColor.focus()
+    elColor.click()
 }
 
 
@@ -389,8 +402,8 @@ function onSavedMemeClicked(ev) {
 }
 
 
-function onSearch(elSearch) {
-    const searchTxt = elSearch.value.toLowerCase()
+function onSearch(keyword) {
+    const searchTxt = keyword.toLowerCase()
     const imgs = getImgs()
     const filteredImgs = imgs.filter((img) => {
         return img.keywords.some((keyword) => {
